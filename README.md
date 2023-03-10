@@ -1,16 +1,16 @@
 Set local env file to AWS Lambda Environment Variable
 
 ```
-npm install aws-lambda-environment-push --save-dev
+npm install aws-lambda-env-variable-push --save-dev
 ```
 OR
 ```
-yarn add aws-lambda-environment-push -D
+yarn add aws-lambda-env-variable-push -D
 ```
 
 # add script in package.json file
 ```
-"pushenv": "aws-lambda-environment-push $(pwd)"
+"pushenv": "aws-lambda-env-variable-push $(pwd)"
 ```
 
 # Run
