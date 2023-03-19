@@ -14,11 +14,11 @@ yarn add aws-lambda-env-variable-push -D
 
 # Run
 ```
-npm run aws-lambda-env-variable-push --help
+npx aws-lambda-env-variable-push --help
 ```
 OR
 ```
-yarn run aws-lambda-env-variable-push --help
+npx aws-lambda-env-variable-push --help
 ```
 
 That's it :)
