@@ -1,11 +1,43 @@
 #!/usr/bin/env node
 
+var argv = require("minimist")(process.argv.slice(2));
+
+if (argv?.h || argv?.help) {
+  console.log(`
+  Usage: aws-lambda-env [options]
+
+  Options:
+    -h, --help          output usage information
+    -v, --version       output the version number
+    -d, --dir           deployment directory
+    -s, --stage         stage name
+    -n, --name          lambda function name
+    -e, --env           environment folder name
+    -y, --yes           skip prompts
+
+  Examples:
+    $ aws-lambda-env -s production -n my-lambda-function -e .env.production -y
+    $ aws-lambda-env --dir=$(pwd) --stage=production --name=my-lambda-function --env=.env.production -y
+  `);
+  process.exit(0);
+}
+
+if (argv?.v || argv?.version) {
+  console.log(require("../package.json").version);
+  process.exit(0);
+}
+
 const child_process = require("child_process");
 const path = require("path");
 const util = require("util");
 const prompt = require("prompt-sync")({ sigint: true });
 
-const deploymentDir = process.argv[2];
+const deploymentDir = argv?.d || argv?.dir || process.cwd();
+if (!deploymentDir) {
+  console.error("Please specify a directory to deploy.");
+  process.exit(1);
+}
+
 const rel = (relPath) => path.resolve(deploymentDir, relPath);
 
 const parse = require("./helpers/parserEnv");
@@ -15,21 +47,23 @@ const exec = util.promisify(child_process.exec);
   console.time("Running time");
 
   // Get stage name
-  let STAGE = "production";
+  let STAGE = argv?.s || argv?.stage || "production";
   const ANSWER_STAGE = prompt(`Stage name [${STAGE}]: `);
-  if (ANSWER_STAGE?.trim()?.length > 0) STAGE = ANSWER_STAGE;
+  if (ANSWER_STAGE?.trim()?.length > 0 && !(argv?.y || argv?.yes)) STAGE = ANSWER_STAGE;
 
   // Get lambda function name
   const splited_dir = deploymentDir.split("/");
   let LAMBDA_FUNCTION_NAME =
+    argv?.n ||
+    argv?.name ||
     splited_dir[splited_dir.length - 2] + "-" + splited_dir[splited_dir.length - 1] + "-" + STAGE;
   const ANSWER_LAMBDA_FUNCTION_NAME = prompt(`Lambda function name [${LAMBDA_FUNCTION_NAME}]: `);
-  if (ANSWER_LAMBDA_FUNCTION_NAME?.trim()?.length > 0) LAMBDA_FUNCTION_NAME = ANSWER_LAMBDA_FUNCTION_NAME;
+  if (ANSWER_LAMBDA_FUNCTION_NAME?.trim()?.length > 0 && !(argv?.y || argv?.yes)) LAMBDA_FUNCTION_NAME = ANSWER_LAMBDA_FUNCTION_NAME;
 
   // Get environment folder name
-  let ENVIRONMENT_FOLDER = `.env.${STAGE}`;
+  let ENVIRONMENT_FOLDER = argv?.e || argv?.env || `.env.${STAGE}`;
   const ANSWER_ENVIRONMENT_FOLDER = prompt(`Lambda function name [${ENVIRONMENT_FOLDER}]: `);
-  if (ANSWER_ENVIRONMENT_FOLDER?.trim()?.length > 0) ENVIRONMENT_FOLDER = ANSWER_ENVIRONMENT_FOLDER;
+  if (ANSWER_ENVIRONMENT_FOLDER?.trim()?.length > 0 && !(argv?.y || argv?.yes)) ENVIRONMENT_FOLDER = ANSWER_ENVIRONMENT_FOLDER;
 
   // Get environment variables
   const variables = await parse(rel(ENVIRONMENT_FOLDER));

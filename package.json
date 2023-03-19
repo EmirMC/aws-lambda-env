@@ -1,14 +1,15 @@
 {
-  "name": "aws-lambda-env-variable-push",
-  "version": "1.0.7",
+  "name": "aws-lambda-env",
+  "version": "1.1.0",
   "main": "index.js",
   "bin": {
-    "aws-lambda-env-variable-push": "src/index.js"
+    "aws-lambda-env": "src/index.js"
   },
   "license": "MIT",
   "author": "EmirMC <emirmertc@gmail.com>",
   "dependencies": {
     "dotenv": "^16.0.3",
+    "minimist": "^1.2.8",
     "prompt-sync": "^4.2.0"
   }
 }
