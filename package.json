@@ -1,6 +1,6 @@
 {
   "name": "aws-lambda-env-variable-push",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "bin": {
     "aws-lambda-env-variable-push": "src/index.js"
