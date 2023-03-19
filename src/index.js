@@ -4,7 +4,7 @@ var argv = require("minimist")(process.argv.slice(2));
 
 if (argv?.h || argv?.help) {
   console.log(`
-  Usage: aws-lambda-env [options]
+  Usage: aws-lambda-env-variable-push [options]
 
   Options:
     -h, --help          output usage information
@@ -16,8 +16,8 @@ if (argv?.h || argv?.help) {
     -y, --yes           skip prompts
 
   Examples:
-    $ aws-lambda-env -s production -n my-lambda-function -e .env.production -y
-    $ aws-lambda-env --dir=$(pwd) --stage=production --name=my-lambda-function --env=.env.production -y
+    $ aws-lambda-env-variable-push -s production -n my-lambda-function -e .env.production -y
+    $ aws-lambda-env-variable-push --dir=$(pwd) --stage=production --name=my-lambda-function --env=.env.production -y
   `);
   process.exit(0);
 }

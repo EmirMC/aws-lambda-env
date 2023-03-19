@@ -1,9 +1,9 @@
 {
-  "name": "aws-lambda-env",
+  "name": "aws-lambda-env-variable-push",
   "version": "1.1.0",
   "main": "index.js",
   "bin": {
-    "aws-lambda-env": "src/index.js"
+    "aws-lambda-env-variable-push": "src/index.js"
   },
   "license": "MIT",
   "author": "EmirMC <emirmertc@gmail.com>",

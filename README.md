@@ -1,11 +1,11 @@
 Set local env file to AWS Lambda Environment Variable
 
 ```
-npm install aws-lambda-env --save-dev
+npm install aws-lambda-env-variable-push --save-dev
 ```
 OR
 ```
-yarn add aws-lambda-env -D
+yarn add aws-lambda-env-variable-push -D
 ```
 
 # Required:
@@ -14,11 +14,11 @@ yarn add aws-lambda-env -D
 
 # Run
 ```
-npm run aws-lambda-env --help
+npm run aws-lambda-env-variable-push --help
 ```
 OR
 ```
-yarn run aws-lambda-env --help
+yarn run aws-lambda-env-variable-push --help
 ```
 
 That's it :)
