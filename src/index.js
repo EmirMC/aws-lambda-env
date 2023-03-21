@@ -49,7 +49,7 @@ const exec = util.promisify(child_process.exec);
   // Get stage name
   let STAGE = argv?.s || argv?.stage || "production";
   const ANSWER_STAGE = !isSkip && prompt(`Stage name [${STAGE}]: `);
-  if (ANSWER_STAGE?.trim()?.length > 0) STAGE = ANSWER_STAGE;
+  if (!isSkip && ANSWER_STAGE?.trim()?.length > 0) STAGE = ANSWER_STAGE;
 
   // Get lambda function name
   const splited_dir = deploymentDir.split("/");
@@ -58,12 +58,12 @@ const exec = util.promisify(child_process.exec);
     argv?.name ||
     splited_dir[splited_dir.length - 2] + "-" + splited_dir[splited_dir.length - 1] + "-" + STAGE;
   const ANSWER_LAMBDA_FUNCTION_NAME = !isSkip && prompt(`Lambda function name [${LAMBDA_FUNCTION_NAME}]: `);
-  if (ANSWER_LAMBDA_FUNCTION_NAME?.trim()?.length > 0) LAMBDA_FUNCTION_NAME = ANSWER_LAMBDA_FUNCTION_NAME;
+  if (!isSkip && ANSWER_LAMBDA_FUNCTION_NAME?.trim()?.length > 0) LAMBDA_FUNCTION_NAME = ANSWER_LAMBDA_FUNCTION_NAME;
 
   // Get environment folder name
   let ENVIRONMENT_FOLDER = argv?.e || argv?.env || `.env.${STAGE}`;
   const ANSWER_ENVIRONMENT_FOLDER = !isSkip && prompt(`Lambda function name [${ENVIRONMENT_FOLDER}]: `);
-  if (ANSWER_ENVIRONMENT_FOLDER?.trim()?.length > 0) ENVIRONMENT_FOLDER = ANSWER_ENVIRONMENT_FOLDER;
+  if (!isSkip && ANSWER_ENVIRONMENT_FOLDER?.trim()?.length > 0) ENVIRONMENT_FOLDER = ANSWER_ENVIRONMENT_FOLDER;
 
   // Get environment variables
   const variables = await parse(rel(ENVIRONMENT_FOLDER));
