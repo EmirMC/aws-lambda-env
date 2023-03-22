@@ -11,10 +11,9 @@ const parser = (contents, isJSON) => {
     .reduce((memo, line) => {
       const kv = line.match(/^([^=]+)=(.*)$/);
       const key = kv[1].trim();
-      const val = kv[2].trim().replace(/['"]/g, "");
-      const ret = val.toLowerCase() === "true" ? true : val.toLowerCase() === "false" ? false : val;
-      memo[key] = ret;
-      text += `${key}=${ret},`;
+      const val = kv[2].trim().replace(/['"]/g, "\'");
+      memo[key] = val;
+      text += `${key}=${val},`;
       return memo;
     }, {});
   return isJSON ? contents : text.slice(0, -1);
